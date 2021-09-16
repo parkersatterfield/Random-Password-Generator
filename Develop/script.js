@@ -18,7 +18,7 @@ generateBtn.addEventListener("click", writePassword);
 // Define global variables
 var alphabetLowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 var alphabetUpperCase = alphabetLowerCase.map(alphabetLowerCase => alphabetLowerCase.toUpperCase());
-var specialCharactersList = ['!', '@', '#', '$','%'];
+var specialCharactersList = ['!', '@', '#', '$','%', '^', '&', '*'];
 var numberList = [1,2,3,4,5,6,7,8,9,0];
 var characterListCombined = alphabetLowerCase.concat(alphabetUpperCase, specialCharactersList, numberList);
 
@@ -36,30 +36,24 @@ var generatePassword = function() {
   }
   // If password is between 8 and 128 characters, confirms if user wants to include special characters in generated password
   else {
-    var specialCharacters = confirm("Do you want to include special characters?");
+    var specialCharacters = confirm("Do you want to include special characters, numbers, and capital letters?");
   }
-
 
   if (specialCharacters) {
     // Generated random character from password character list array and pushes it to end of password array over the length of password entered by user
     for (i=0; i<passwordLength; i++) {
       var randomCharacter = characterListCombined[Math.floor(Math.random()* characterListCombined.length)];
-      passwordArray[i] = passwordArray.push(randomCharacter);
-      console.log(randomCharacter);
+      var looper = i;
+      passwordArray.push(randomCharacter);
     }
-  } else {
+  } else if (specialCharacters == false) {
     for (i=0; i<passwordLength; i++) {
       var randomCharacter = alphabetLowerCase[Math.floor(Math.random()* alphabetLowerCase.length)];
-      passwordArray[i] = passwordArray.push(randomCharacter);
-      console.log(randomCharacter);
+      var looper = i;
+      passwordArray.push(randomCharacter);
     }
-  }
-
-  // Generated random character from password character list array and pushes it to end of password array over the length of password entered by user
-  for (i=0; i<passwordLength; i++) {
-    var randomCharacter = characterListCombined[Math.floor(Math.random()* characterListCombined.length)];
-    passwordArray[i] = passwordArray.push(randomCharacter);
-    console.log(randomCharacter);
+  } else {
+    return;
   }
 
   // Converts password array into a string
