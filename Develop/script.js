@@ -20,38 +20,53 @@ var alphabetLowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
 var alphabetUpperCase = alphabetLowerCase.map(alphabetLowerCase => alphabetLowerCase.toUpperCase());
 var specialCharactersList = ['!', '@', '#', '$','%'];
 var numberList = [1,2,3,4,5,6,7,8,9,0];
-var characterListCombined = [alphabetLowerCase.concat(alphabetUpperCase.concat(specialCharactersList.concat(numberList)))];
+var characterListCombined = alphabetLowerCase.concat(alphabetUpperCase, specialCharactersList, numberList);
 
 var generatePassword = function() {
+  // Declares empty array 
+  var passwordArray = [];
+  // Prompts user for password length
   var passwordLength = prompt("How many characters do you want your password to be?");
+  // Checks that user-entered password length is between 8 and 128 characters
   if (passwordLength > 128) {
     alert("Password must be between 8 and 128 characters.");
   }
   else if (passwordLength < 8) {
     alert("Password must be between 8 and 128 characters.");
   }
+  // If password is between 8 and 128 characters, confirms if user wants to include special characters in generated password
   else {
     var specialCharacters = confirm("Do you want to include special characters?");
   }
 
-  for (i=0; i<passwordLength; i++) {
-    var passwordString = (Math.floor(Math.random() * characterListCombined));
 
+  if (specialCharacters) {
+    // Generated random character from password character list array and pushes it to end of password array over the length of password entered by user
+    for (i=0; i<passwordLength; i++) {
+      var randomCharacter = characterListCombined[Math.floor(Math.random()* characterListCombined.length)];
+      passwordArray[i] = passwordArray.push(randomCharacter);
+      console.log(randomCharacter);
+    }
+  } else {
+    for (i=0; i<passwordLength; i++) {
+      var randomCharacter = alphabetLowerCase[Math.floor(Math.random()* alphabetLowerCase.length)];
+      passwordArray[i] = passwordArray.push(randomCharacter);
+      console.log(randomCharacter);
+    }
   }
 
+  // Generated random character from password character list array and pushes it to end of password array over the length of password entered by user
+  for (i=0; i<passwordLength; i++) {
+    var randomCharacter = characterListCombined[Math.floor(Math.random()* characterListCombined.length)];
+    passwordArray[i] = passwordArray.push(randomCharacter);
+    console.log(randomCharacter);
+  }
 
-  // if (specialCharacters) {
-  //   for (i=0; i<passwordLength; i++) {
-  //     var passwordString = Math.floor(Math.random() * characterListCombined.length);
-  //   }
-    
-  //   } else {
-  //     for (i=0; i<passwordLength; i++) {
-  //       var passwordString = Math.floor(Math.random() * alphabetLowerCase.length);
-  //     }
-  // }
+  // Converts password array into a string
+  var passwordString = passwordArray.join("");
 
-  // return passwordString;
+  // Returns generated password so that it will display in box (line 6)
+  return passwordString;
 }
 
 // alert, prompt, confirm (Hints from Jung)
