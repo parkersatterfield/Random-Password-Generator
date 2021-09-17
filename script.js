@@ -27,30 +27,42 @@ var generatePassword = function() {
   var passwordArray = [];
   // Prompts user for password length
   var passwordLength = prompt("How many characters do you want your password to be?");
-  // Checks that user-entered password length is between 8 and 128 characters
-  if (passwordLength > 128) {
+  // Checks that user input is an integer
+  if (isNaN(passwordLength)) { 
+    return "Please input a whole number";
+    // Checks that user-entered password length is between 8 and 128 characters
+  } else if (passwordLength > 128) {
     alert("Password must be between 8 and 128 characters.");
-  }
-  else if (passwordLength < 8) {
+  } else if (passwordLength < 8) {
     alert("Password must be between 8 and 128 characters.");
-  }
-  // If password is between 8 and 128 characters, confirms if user wants to include special characters in generated password
-  else {
+     // If password is between 8 and 128 characters, confirms if user wants to include special characters in generated password
+  } else {
     var specialCharacters = confirm("Do you want to include special characters, numbers, and capital letters?");
   }
 
+  // If user selects special characters
   if (specialCharacters) {
     // Generated random character from password character list array and pushes it to end of password array over the length of password entered by user
     for (i=0; i<passwordLength; i++) {
       var randomCharacter = characterListCombined[Math.floor(Math.random()* characterListCombined.length)];
-      var looper = i;
-      passwordArray.push(randomCharacter);
+      var looper = i; // dummy variable for loop
+      passwordArray.push(randomCharacter); // saves randomly generated character from array to end of password array
     }
+
+    // Ensures that generated password has at least one special character
+    var found = passwordArray.some(r=> specialCharactersList.includes(r))
+    if (found === false) {
+      passwordArray.push(specialCharactersList[Math.floor(Math.random()* specialCharactersList.length)]);
+      passwordArray.shift();
+      console.log('fixed');
+    }
+    
+  // If user does not want special characters
   } else if (specialCharacters == false) {
     for (i=0; i<passwordLength; i++) {
       var randomCharacter = alphabetLowerCase[Math.floor(Math.random()* alphabetLowerCase.length)];
-      var looper = i;
-      passwordArray.push(randomCharacter);
+      var looper = i; // dummy variable for loop
+      passwordArray.push(randomCharacter); // saves randomly generated character from array to end of password array
     }
   } else {
     return;
@@ -62,5 +74,3 @@ var generatePassword = function() {
   // Returns generated password so that it will display in box (line 6)
   return passwordString;
 }
-
-// alert, prompt, confirm (Hints from Jung)
